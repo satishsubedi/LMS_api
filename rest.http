@@ -14,7 +14,7 @@ Content-Type: application/json
     "fName":"satish",
     "lName":"subedi",
     "email":"satish@gmail.com",
-    "phone":"9849679038",
+    "phone":"9849679",
     "password":"sat@123"
 }
 
@@ -23,6 +23,15 @@ POST {{rootUrl}}/api/v1/auth/activate-user
 Content-Type: application/json
 
 {
-    "sessionid":"67685240d82924abbacab185",
-    "t":"5736127f-a145-456b-8340-abc98150a508"
+    "sessionid":"6768d8edde3f0a0081a5270e",
+    "t":"95ece22d-76e3-442c-84b4-f91d5bd9f642"
+}
+
+### Post login User
+POST {{rootUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email":"satish@gmail.com",
+    "password":"sat@123"
 }

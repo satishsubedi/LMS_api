@@ -3,13 +3,18 @@ import {
   createNewSession,
   deleteNewSession,
 } from "../models/session/sessionModel.js";
-import { createNewUser, updateUser } from "../models/user/userModel.js";
+import {
+  createNewUser,
+  getUserByEmail,
+  updateUser,
+} from "../models/user/userModel.js";
 import {
   emailActivationUrl,
   userEmailActivation,
 } from "../services/email/emailService.js";
-import { hashpassword } from "../utils/bcrypt.js";
+import { comparePassword, hashpassword } from "../utils/bcrypt.js";
 import { v4 as uuidv4 } from "uuid";
+import { getJwts } from "../utils/jwt.js";
 export const insertNewUser = async (req, res, next) => {
   try {
     // to do signup process
@@ -78,17 +83,51 @@ export const activateUser = async (req, res, next) => {
       );
       console.log(updatedUser);
       if (updatedUser?.id) {
+        const message = "Your account is activated .You may can login now";
+        responseClient({ req, res, message });
         userEmailActivation({
           email: updatedUser.email,
           name: updatedUser.fName,
         });
-        const message = "Your account is activated .You may can login now";
-        responseClient({ req, res, message });
       }
     }
     const statusCode = 400;
     const message = "invalid token";
     responseClient({ req, res, message, statusCode });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const loginUser = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await getUserByEmail({ email });
+    if (user?._id) {
+      // compare password
+      const isMatch = comparePassword(password, user.password);
+      console.log(isMatch);
+      if (isMatch) {
+        console.log("User authenticated succesfully");
+        // generate tokens
+        //store tokens
+        //response token
+        const jwts = await getJwts(user.email);
+        console.log(jwts);
+        return responseClient({
+          req,
+          res,
+          message: "User Login Sucessfully",
+          payload: jwts,
+        });
+      }
+    }
+    responseClient({
+      req,
+      res,
+      message: "Invalid Login Details",
+      statusCode: 401,
+    });
   } catch (error) {
     next(error);
   }
