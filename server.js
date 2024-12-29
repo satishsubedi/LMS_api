@@ -10,10 +10,11 @@ const PORT = process.env.PORT || 8000;
 import { dbConnect } from "./config/dbConfig.js";
 
 import authRoute from "./routes/authRoute.js";
+import userRoute from "./routes/userRoute.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { responseClient } from "./middleware/responseClient.js";
-app.use("/api/v1/auth",authRoute)
-
+app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/users", userRoute);
 
 // DB Connect
 
@@ -26,18 +27,14 @@ dbConnect()
     });
   })
   .catch((error) => console.log(error));
-  
-
-
-
 
 //check server status
 app.get("/", (req, res) => {
   // res.json({
   //   message: "Server is live",
   // });
-  const message = "Server is alive"
-  responseClient({req,res,message});
+  const message = "Server is alive";
+  responseClient({ req, res, message });
 });
 
-app.use(errorHandler)
+app.use(errorHandler);

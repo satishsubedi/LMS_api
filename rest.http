@@ -35,3 +35,7 @@ Content-Type: application/json
     "email":"satish@gmail.com",
     "password":"sat@123"
 }
+
+### Get User Profile
+GET  {{rootUrl}}/api/v1/users/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhdGlzaEBnbWFpbC5jb20iLCJpYXQiOjE3MzUzMTU2MDQsImV4cCI6MTczNTMxNjUwNH0.qW1pKOKBY3Oqv12vrV5djxJqg2aH90HZCRZRxLyljwU
