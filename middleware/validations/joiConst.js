@@ -14,7 +14,7 @@ export const PASSWORDREQ = Joi.string().required();
 export const PHONE = Joi.string().max(10).min(10);
 export const PHONEREQ = PHONE.required();
 
-export const SESSIONID = Joi.string().alphanum().min(50);
+export const SESSIONID = Joi.string().alphanum();
 export const SESSIONIDREQ = SESSIONID.required();
 
 export const TOKEN = Joi.string();

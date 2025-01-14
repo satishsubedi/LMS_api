@@ -1,6 +1,7 @@
 import { responseClient } from "../middleware/responseClient.js";
 import {
   createNewSession,
+  deleteManySession,
   deleteNewSession,
 } from "../models/session/sessionModel.js";
 import {
@@ -17,11 +18,6 @@ import { v4 as uuidv4 } from "uuid";
 import { getJwts } from "../utils/jwt.js";
 export const insertNewUser = async (req, res, next) => {
   try {
-    // to do signup process
-    // receive user input
-    // extract password
-    // encrypt password
-    // override the user input
     const { password } = req.body;
     req.body.password = hashpassword(password);
 
@@ -38,7 +34,6 @@ export const insertNewUser = async (req, res, next) => {
       const session = await createNewSession(sessionobj);
       if (session?._id) {
         const url = `${process.env.ROOT_URL}/activate-user?sessionid=${session._id}&t=${session.token}`;
-        console.log(url);
         const emailId = await emailActivationUrl({
           email: user.email,
           name: user.fName,
@@ -85,15 +80,16 @@ export const activateUser = async (req, res, next) => {
       if (updatedUser?.id) {
         const message = "Your account is activated .You may can login now";
         responseClient({ req, res, message });
-        userEmailActivation({
+        return userEmailActivation({
           email: updatedUser.email,
           name: updatedUser.fName,
         });
       }
+    } else {
+      const statusCode = 400;
+      const message = "invalid token";
+      return responseClient({ req, res, message, statusCode });
     }
-    const statusCode = 400;
-    const message = "invalid token";
-    responseClient({ req, res, message, statusCode });
   } catch (error) {
     next(error);
   }
@@ -102,18 +98,21 @@ export const activateUser = async (req, res, next) => {
 export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+
     const user = await getUserByEmail({ email });
+
     if (user?._id) {
       // compare password
+      console.log(password, user.password);
       const isMatch = comparePassword(password, user.password);
-      console.log(isMatch);
+
       if (isMatch) {
-        console.log("User authenticated succesfully");
+        // console.log("User authenticated succesfully");
         // generate tokens
         //store tokens
         //response token
         const jwts = await getJwts(user.email);
-        console.log(jwts);
+        // console.log(jwts);
         return responseClient({
           req,
           res,
@@ -128,6 +127,21 @@ export const loginUser = async (req, res, next) => {
       message: "Invalid Login Details",
       statusCode: 401,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const logoutUser = async (req, res, next) => {
+  try {
+    // get the token
+
+    const { email } = req.userInfo;
+    // update refreshjwt to ""
+    await updateUser({ email }, { refreshJWT: "" });
+
+    // delete the accessjwt from session table
+    await deleteManySession({ association: email });
   } catch (error) {
     next(error);
   }

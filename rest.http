@@ -13,9 +13,9 @@ Content-Type: application/json
 {
     "fName":"satish",
     "lName":"subedi",
-    "email":"satish@gmail.com",
-    "phone":"9849679",
-    "password":"sat@123"
+    "email":"satish0@gmail.com",
+    "phone":"9849679038",
+    "password":"Sat@123"
 }
 
 ### Post to activate User
@@ -23,8 +23,8 @@ POST {{rootUrl}}/api/v1/auth/activate-user
 Content-Type: application/json
 
 {
-    "sessionid":"6768d8edde3f0a0081a5270e",
-    "t":"95ece22d-76e3-442c-84b4-f91d5bd9f642"
+    "sessionid":"677575cbccfd2c217406174a",
+    "t":"31fbe892-1e1f-48fc-86a8-0de421598571"
 }
 
 ### Post login User
@@ -39,3 +39,8 @@ Content-Type: application/json
 ### Get User Profile
 GET  {{rootUrl}}/api/v1/users/profile
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhdGlzaEBnbWFpbC5jb20iLCJpYXQiOjE3MzUzMTU2MDQsImV4cCI6MTczNTMxNjUwNH0.qW1pKOKBY3Oqv12vrV5djxJqg2aH90HZCRZRxLyljwU
+
+
+### Get User Profile
+GET  {{rootUrl}}/api/v1/auth/renew-jwt
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhdGlzaEBnbWFpbC5jb20iLCJpYXQiOjE3MzU0NTU4NzYsImV4cCI6MTczODA0Nzg3Nn0.oTKNmt3x7k_FOGltTyNLGSc_PrWEASu83qwUit60GlE

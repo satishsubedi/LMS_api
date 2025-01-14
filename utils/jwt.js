@@ -38,6 +38,16 @@ export const createRefresjJwt = async (email) => {
   return user?._id ? refreshJWT : null;
 };
 
+//verify refreshJWY
+export const verifyRefreshJWT = (token) => {
+  try {
+    return jwt.verify(token, process.env.REFRESHJWTTOKENSECRETKEY);
+  } catch (error) {
+    console.log(error);
+    return error.message;
+  }
+};
+
 export const getJwts = async (email) => {
   const obj = {
     accessJWT: await createAccessJwt(email),

@@ -33,7 +33,7 @@ export const emailActivatedUrlTemplate = ({ email, name }) => {
 <br/>
 <br/>
 
-<p>YHello  your account has been activated you may can Login
+<p>Hello  your account has been activated you may can Login
 
 <br/>
 Regards
