@@ -2,6 +2,7 @@ import {
   EMAILREQ,
   FNAMEREQ,
   LNAMEREQ,
+  OTP,
   PASSWORDREQ,
   PHONE,
   SESSIONIDREQ,
@@ -33,6 +34,22 @@ export const validateLoginData = (req, res, next) => {
   const obj = {
     email: EMAILREQ,
     password: PASSWORDREQ,
+  };
+  return validateData({ req, res, next, obj });
+};
+
+export const validateForgetpasswordData = (req, res, next) => {
+  const obj = {
+    email: EMAILREQ,
+  };
+  return validateData({ req, res, next, obj });
+};
+
+export const validateResetpasswordData = (req, res, next) => {
+  const obj = {
+    email: EMAILREQ,
+    password: PASSWORDREQ,
+    otp: OTP,
   };
   return validateData({ req, res, next, obj });
 };

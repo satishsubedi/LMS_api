@@ -11,11 +11,15 @@ import {
 } from "../models/user/userModel.js";
 import {
   emailActivationUrl,
+  passwordChangeNotificationEmail,
+  passwordresetOTPEmail,
   userEmailActivation,
 } from "../services/email/emailService.js";
 import { comparePassword, hashpassword } from "../utils/bcrypt.js";
 import { v4 as uuidv4 } from "uuid";
 import { getJwts } from "../utils/jwt.js";
+import { generateOTP } from "../utils/randongenerator.js";
+
 export const insertNewUser = async (req, res, next) => {
   try {
     const { password } = req.body;
@@ -145,4 +149,83 @@ export const logoutUser = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+export const generate_OTP = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = await getUserByEmail({ email });
+    console.log(user);
+    if (user?._id) {
+      // create an otp
+      const otp = generateOTP();
+
+      // store otp in session table
+      const session = await createNewSession({
+        token: otp,
+        association: email,
+      });
+      if (session?._id) {
+        //Email otp to the user
+        passwordresetOTPEmail({
+          email,
+          otp,
+          expire: new Date(Date.now() + 100000 * 60 * 5),
+        });
+        console.log(session);
+      }
+      return responseClient({
+        req,
+        res,
+        message: "Please find the otp",
+      });
+    }
+    // responseClient({
+    //   req,
+    //   res,
+    //   message: "Invalid Login Details",
+    //   statusCode: 401,
+    // });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const reset_password = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const { email, password, otp } = req.body;
+    // query the otp is pressent
+    const session = await deleteNewSession({
+      token: otp,
+      association: email,
+    });
+    if (session?._id) {
+      console.log(session?._id);
+      // update the user model
+      const hasspassword = hashpassword(password);
+      const updated_user = await updateUser(
+        { email },
+        { password: hasspassword }
+      );
+      if (updated_user?._id) {
+        passwordChangeNotificationEmail({
+          email,
+          name: updated_user.fName,
+        });
+        // send email notification
+        return responseClient({
+          req,
+          res,
+          message: "Please find the updated user",
+        });
+      }
+    }
+    return responseClient({
+      req,
+      res,
+      statusCode: 404,
+      message: "Could not get the otp",
+    });
+  } catch (error) {}
 };

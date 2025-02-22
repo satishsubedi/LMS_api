@@ -42,3 +42,50 @@ Regards
     `, // html body
   };
 };
+
+export const emailOTPTemplate = ({ otp, email }) => {
+  return {
+    from: `"LMS 👻" <${process.env.SMTP_EMAIL}>`, // sender address
+    to: email, // list of receivers
+    subject: "Generation of OTP ✔", // Subject line
+    text: `Hello ${email} please check the otp "${otp}"`, // plain text body
+    html: `<b>${email}</b>
+    
+    <br/>
+<br/>
+<br/>
+
+<p>Hello you can use below mwntioned otp to reset your password</P>
+<br/>
+<b>${otp}</b>
+
+<br/>
+Regards
+<p>LMS team </p>
+    
+    `, // html body
+  };
+};
+export const emailPasswordResetTemplate = ({ name, email }) => {
+  return {
+    from: `"LMS 👻" <${process.env.SMTP_EMAIL}>`, // sender address
+    to: email, // list of receivers
+    subject: "Change of Password ✔", // Subject line
+    text: `Hello ${email} Your user password has been changed sucessfully`, // plain text body
+    html: `<b>${email}</b>
+    
+    <br/>
+<br/>
+<br/>
+
+<p>Hello your password has been changed successfully. Please login with new password</P>
+<br/>
+<b>${name}</b>
+
+<br/>
+Regards
+<p>LMS team </p>
+    
+    `, // html body
+  };
+};
