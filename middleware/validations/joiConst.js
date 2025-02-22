@@ -19,3 +19,5 @@ export const SESSIONIDREQ = SESSIONID.required();
 
 export const TOKEN = Joi.string();
 export const TOKENREQ = TOKEN.required();
+
+export const OTP = Joi.number().required();

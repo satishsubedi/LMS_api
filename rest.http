@@ -44,3 +44,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhdGlza
 ### Get User Profile
 GET  {{rootUrl}}/api/v1/auth/renew-jwt
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhdGlzaEBnbWFpbC5jb20iLCJpYXQiOjE3MzU0NTU4NzYsImV4cCI6MTczODA0Nzg3Nn0.oTKNmt3x7k_FOGltTyNLGSc_PrWEASu83qwUit60GlE
+
+### Generate OTP
+POST {{rootUrl}}/api/v1/auth/forget-password
+Content-Type: application/json
+
+{
+    "email":"satish@gmail.com"
+    
+}
+
+### Reset-Password-user 
+POST {{rootUrl}}/api/v1/auth/reset-password
+Content-Type: application/json
+
+{
+    "email":"satish@gmail.com",
+    "password":"Satish@1234",
+    "otp":1644
+}
