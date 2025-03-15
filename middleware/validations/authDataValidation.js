@@ -9,7 +9,6 @@ import {
   TOKENREQ,
 } from "./joiConst.js";
 import { validateData } from "./joiValidation.js";
-import Joi from "joi";
 
 export const validateSignUpData = (req, res, next) => {
   const obj = {

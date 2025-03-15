@@ -28,10 +28,26 @@ export const userAuthMiddleware = async (req, res, next) => {
         }
       }
     }
-    message = decode;
+    // message = decode;
   }
   // message = decode === "jwt expired" ? decode : "Unauthorized";
   responseClient({ req, res, message, statusCode: 401 });
+};
+
+export const adminAuthMiddleware = (req, res, next) => {
+  console.log(req.userInfo);
+  try {
+    req.userInfo.role === "admin"
+      ? next()
+      : responseClient({
+          req,
+          res,
+          message: "Unauthorized to access the resources",
+          statusCode: 403,
+        });
+  } catch (error) {
+    //next(error);
+  }
 };
 
 export const renewaccessJWTMiddleware = async (req, res, next) => {
