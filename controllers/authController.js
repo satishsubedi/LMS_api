@@ -43,7 +43,7 @@ export const insertNewUser = async (req, res, next) => {
           name: user.fName,
           url,
         });
-        console.log(emailId);
+
         if (emailId) {
           const message =
             "we have sent to you an email and plese the link to activate your account";
@@ -69,18 +69,20 @@ export const insertNewUser = async (req, res, next) => {
 export const activateUser = async (req, res, next) => {
   try {
     const { sessionid, t } = req.body;
-    console.log(sessionid, t);
+
+    // find the mtching id , removes it and returns the found document
     const session = await deleteNewSession({
       _id: sessionid,
       token: t,
     });
-    console.log(session);
+
     if (session?._id) {
+      // find one by email and update the status
       const updatedUser = await updateUser(
         { email: session.association },
         { status: "active" }
       );
-      console.log(updatedUser);
+
       if (updatedUser?.id) {
         const message = "Your account is activated .You may can login now";
         responseClient({ req, res, message });
@@ -102,7 +104,7 @@ export const activateUser = async (req, res, next) => {
 export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
+    // findone by email
     const user = await getUserByEmail({ email });
 
     if (user?._id) {
@@ -114,8 +116,8 @@ export const loginUser = async (req, res, next) => {
         // console.log("User authenticated succesfully");
         // generate tokens
         //store tokens
-        //response token
         const jwts = await getJwts(user.email);
+        //response token
         // console.log(jwts);
         return responseClient({
           req,
@@ -195,7 +197,7 @@ export const reset_password = async (req, res, next) => {
   try {
     console.log(req.body);
     const { email, password, otp } = req.body;
-    // query the otp is pressent
+    // query the otp is pressent findoneanddelete
     const session = await deleteNewSession({
       token: otp,
       association: email,

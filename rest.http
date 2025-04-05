@@ -33,7 +33,7 @@ Content-Type: application/json
 
 {
     "email":"satish@gmail.com",
-    "password":"sat@123"
+    "password":"Satish@12345"
 }
 
 ### Get User Profile
@@ -60,6 +60,35 @@ Content-Type: application/json
 
 {
     "email":"satish@gmail.com",
-    "password":"Satish@1234",
-    "otp":1644
+    "password":"Satish@12345",
+    "otp":5487
+}
+
+#### fetch Book API by public
+GET {{rootUrl}}/api/v1/books
+
+#### fetch singleBook API by public
+GET {{rootUrl}}/api/v1/books/public/the-c++
+
+#### fetch Book API by Admin
+GET {{rootUrl}}/api/v1/books/admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhdGlzaEBnbWFpbC5jb20iLCJpYXQiOjE3NDA1ODIxNDgsImV4cCI6MTc0MDU4MzA0OH0.gOImfEjJqxbjUTEl3ZYM9joyrXZY_wB1KJBsDyuuABg
+
+### insert book
+POST {{rootUrl}}/api/v1/books
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhdGlzaEBnbWFpbC5jb20iLCJpYXQiOjE3NDA1MDYxMzEsImV4cCI6MTc0MDUwNzAzMX0.18SgJ1qBB4bLnuv25GYfmjPl9rihkEZIwafDzJTyWzs
+
+{
+
+  "title": "The Great GAtsby",
+  "year": 1921,
+  "author": "F. Scott Fitzgerald",
+  "imgUrl": "https://example.com/images/great-gatsby.jpg",
+  "isbn": "9780743273565",
+  "genre": "Fiction",
+  "description":"The book is about Great Gatsby"
+  
+  
+ 
 }

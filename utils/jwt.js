@@ -5,7 +5,7 @@ import { updateUser } from "../models/user/userModel.js";
 // generate accessJWT
 export const createAccessJwt = async (email) => {
   const accessJWT = jwt.sign({ email }, process.env.ACCESSJWTTOKENSECRETKEY, {
-    expiresIn: "15min",
+    expiresIn: "1d",
   });
   const obj = {
     token: accessJWT,
@@ -13,7 +13,7 @@ export const createAccessJwt = async (email) => {
     expire: new Date(Date.now() + 15 * 60 * 1000), //15min
   };
   const newSession = await createNewSession(obj);
-  console.log(newSession);
+
   return newSession?._id ? accessJWT : null;
 };
 

@@ -9,11 +9,11 @@ const sessionSchema = new mongoose.Schema(
     association: {
       type: String,
     },
-    expire: {
-      type: Date,
-      default: new Date(Date.now() + 3600000), //1000*60*60
-      expires: 0,
-    },
+    // expire: {
+    //   type: Date,
+    //   default: new Date(Date.now() + 3600000000000000), //1000*60*60
+    //   expires: 0,
+    // },
   },
   {
     timestamps: true,
