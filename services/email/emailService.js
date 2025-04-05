@@ -11,7 +11,6 @@ export const emailActivationUrl = async (obj) => {
   // get the template
   const info = await emailTransporter().sendMail(emailActivateUrlTemplate(obj));
 
-  console.log(info.messageId);
   return info.messageId;
 };
 

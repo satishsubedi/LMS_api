@@ -13,7 +13,7 @@ export const createAccessJwt = async (email) => {
     expire: new Date(Date.now() + 15 * 60 * 1000), //15min
   };
   const newSession = await createNewSession(obj);
-  console.log(newSession);
+
   return newSession?._id ? accessJWT : null;
 };
 

@@ -10,6 +10,9 @@ export const getAllAdminBooks = () => {
 export const getAllPublicBooks = (filter) => {
   return bookSchema.find(filter);
 };
+export const getSinglePublicBook = (filter) => {
+  return bookSchema.findOne(filter);
+};
 
 export const updateBook = ({ _id, ...rest }) => {
   return bookSchema.findByIdAndUpdate(_id, rest);

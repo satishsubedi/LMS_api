@@ -66,6 +66,7 @@ Regards
     `, // html body
   };
 };
+
 export const emailPasswordResetTemplate = ({ name, email }) => {
   return {
     from: `"LMS 👻" <${process.env.SMTP_EMAIL}>`, // sender address

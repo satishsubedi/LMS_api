@@ -4,6 +4,7 @@ import {
   deleteBook,
   getAllAdminBooks,
   getAllPublicBooks,
+  getSinglePublicBook,
   updateBook,
 } from "../models/book/bookModel.js";
 import slugify from "slugify";
@@ -76,6 +77,25 @@ export const getAllPublicBooksController = async (req, res, next) => {
         req,
         res,
         message: "All the books fetched by the Public",
+        payload,
+      });
+
+    // console.log(books);
+  } catch (error) {
+    // console.log(error);
+    next(error);
+  }
+};
+export const getSinglePublicBooksController = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+    const payload = await getSinglePublicBook({ slug, status: "active" });
+    // console.log(payload.author);
+    payload &&
+      responseClient({
+        req,
+        res,
+        message: "here is the single book",
         payload,
       });
 

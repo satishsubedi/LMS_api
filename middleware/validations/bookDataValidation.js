@@ -24,10 +24,14 @@ export const validateNewBookData = (req, res, next) => {
 };
 
 export const validateEditBookData = (req, res, next) => {
-  console.log(typeof req.body.imageTodelete, req.body.imageTodelete, "aa");
-  console.log(req.body);
   req.body.expectedAvailable =
     req.body.expectedAvailable === "null" ? null : req.body.expectedAvailable;
+  if (req.body.imageTodelete) {
+    if (!Array.isArray(req.body.imageTodelete)) {
+      req.body.imageTodelete = [req.body.imageTodelete];
+    }
+  }
+
   const obj = {
     title: SHORT_STR_REQ,
     year: YEAR_REQ,

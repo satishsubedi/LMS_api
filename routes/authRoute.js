@@ -8,6 +8,7 @@ import {
   logoutUser,
   reset_password,
 } from "../controllers/authController.js";
+
 import {
   validateForgetpasswordData,
   validateLoginData,
@@ -15,6 +16,7 @@ import {
   validateSessionData,
   validateSignUpData,
 } from "../middleware/validations/authDataValidation.js";
+
 import {
   renewaccessJWTMiddleware,
   userAuthMiddleware,

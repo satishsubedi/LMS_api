@@ -3,6 +3,7 @@ import {
   deleteBookController,
   getAllAdminBooksController,
   getAllPublicBooksController,
+  getSinglePublicBooksController,
   insertNewBook,
   updateBookController,
 } from "../controllers/bookController.js";
@@ -10,6 +11,7 @@ import {
   adminAuthMiddleware,
   userAuthMiddleware,
 } from "../middleware/authMiddleware.js";
+
 import {
   validateEditBookData,
   validateNewBookData,
@@ -24,6 +26,7 @@ router.get(
   adminAuthMiddleware,
   getAllAdminBooksController
 );
+router.get("/public/:slug", getSinglePublicBooksController);
 router.get("/", getAllPublicBooksController);
 
 router.post(
